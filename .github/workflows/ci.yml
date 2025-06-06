@@ -26,8 +26,18 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
       - name: Empacotar com Maven
         run: mvn package
+        working-directory: devcalc-api
 
   deploy:
     runs-on: ubuntu-latest
