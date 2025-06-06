@@ -23,7 +23,6 @@ jobs:
       run_lint: ${{ inputs.run_lint }}
       run_tests: ${{ inputs.run_tests }}
 
-
   package:
     needs: lint-and-test
     runs-on: ubuntu-latest
