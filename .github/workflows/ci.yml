@@ -48,3 +48,25 @@ jobs:
 
       - name: Rodar Testes
         run: mvn test
+  package:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Instalar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Gerar .jar com Maven
+        run: mvn package
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: package
+    steps:
+      - name: Deploy simulado
+        run: echo "Deploy realizado com sucesso"
