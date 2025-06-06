@@ -4,18 +4,25 @@ on:
   workflow_call:
     inputs:
       run_lint:
+        description: 'Executar Lint?'
         required: true
         type: boolean
-        description: Executar lint?
       run_tests:
+        description: 'Executar Testes?'
         required: true
         type: boolean
-        description: Executar testes?
 
-
-  test:
-    needs: lint
+jobs:
+  lint:
+    if: ${{ inputs.run_lint }}
     runs-on: ubuntu-latest
     steps:
-      - name: Rodar testes automatizados
-        run: echo "Testes executados com sucesso"
+      - uses: actions/checkout@v3
+      - run: echo "Executando Lint..."
+
+  test:
+    if: ${{ inputs.run_tests }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: echo "Executando Testes..."
