@@ -12,14 +12,17 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v3
 
-      - name: Build do projeto
+      - name: Build do projeto (placeholder)
         run: echo "Build realizado com sucesso"
 
   test:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Testes automatizados
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Rodar testes (placeholder)
         run: echo "Testes executados com sucesso"
 
   package:
@@ -33,10 +36,11 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '11'
 
       - name: Empacotar com Maven
         run: mvn package
+        working-directory: devcalc-api
 
   deploy:
     runs-on: ubuntu-latest
@@ -44,4 +48,3 @@ jobs:
     steps:
       - name: Deploy simulação
         run: echo "Deploy realizado com sucesso"
-#alteração de teste
