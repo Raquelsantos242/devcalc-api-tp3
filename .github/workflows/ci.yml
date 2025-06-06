@@ -2,48 +2,31 @@ name: CI Pipeline
 
 on:
   push:
-    branches:
-      - main
-
+    branches: [main]
   workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout do código
-        uses: actions/checkout@v3
-
-      - name: Build do projeto (placeholder)
-        run: echo "Build realizado com sucesso"
-
-  test:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Rodar testes (placeholder)
-        run: echo "Testes executados com sucesso"
+  lint-and-test:
+    uses: ./.github/workflows/lint-and-test.yml
 
   package:
+    needs: lint-and-test
     runs-on: ubuntu-latest
-    needs: test
     steps:
       - name: Checkout do código
         uses: actions/checkout@v3
-
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
-
       - name: Empacotar com Maven
         run: mvn package
         working-directory: devcalc-api
 
   deploy:
-    runs-on: ubuntu-latest
     needs: package
+    runs-on: ubuntu-latest
     steps:
       - name: Deploy simulação
         run: echo "Deploy realizado com sucesso"
