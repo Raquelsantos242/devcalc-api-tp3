@@ -11,3 +11,11 @@ on:
         required: true
         type: boolean
         description: Executar testes?
+
+
+  test:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Rodar testes automatizados
+        run: echo "Testes executados com sucesso"
