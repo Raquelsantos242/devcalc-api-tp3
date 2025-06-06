@@ -37,7 +37,6 @@ jobs:
 
       - name: Empacotar com Maven
         run: mvn package
-        working-directory: devcalc-api
 
   deploy:
     runs-on: ubuntu-latest
