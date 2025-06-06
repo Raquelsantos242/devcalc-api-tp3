@@ -21,8 +21,8 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
       - name: Empacotar com Maven
-        run: mvn package
-        working-directory: devcalc-api
+      - run: mvn package
+
 
   deploy:
     needs: package
