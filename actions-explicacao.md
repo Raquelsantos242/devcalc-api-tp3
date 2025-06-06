@@ -19,3 +19,8 @@ name: Setup Java
 
 Essa action é chamada dentro do workflow usando `uses:`, e os parâmetros são enviados com `with:`. O workflow completo fica salvo em `.github/workflows/ci.yml` e contém jobs como `build`, `test`, `package` e `deploy`, organizados com `needs:` para garantir ordem de execução. Assim, workflows coordenam **quando e o que** será executado, enquanto actions definem **como** cada tarefa específica é realizada.
 
+**Referências**
+
+DUKE, M. What’s the difference between a GitHub action and a workflow? Disponível em: <https://dev.to/github/whats-the-difference-between-a-github-action-and-a-workflow-2gba>. Acesso em: 6 jun. 2025.
+
+‌

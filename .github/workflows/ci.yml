@@ -4,10 +4,24 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      run_tests:
+        description: 'Executar testes automatizados?'
+        type: boolean
+        required: true
+        default: true
+      run_lint:
+        description: 'Executar verificação de código (Lint)?'
+        type: boolean
+        required: true
+        default: true
 
 jobs:
   lint-and-test:
     uses: ./.github/workflows/lint-and-test.yml
+    with:
+      run_tests: ${{ inputs.run_tests }}
+      run_lint: ${{ inputs.run_lint }}
 
   package:
     needs: lint-and-test
@@ -15,15 +29,13 @@ jobs:
     steps:
       - name: Checkout do código
         uses: actions/checkout@v3
-
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
-
       - name: Empacotar com Maven
-        run: mvn package  # Correção: 'run' dentro do mesmo passo
+        run: mvn package
 
   deploy:
     needs: package
