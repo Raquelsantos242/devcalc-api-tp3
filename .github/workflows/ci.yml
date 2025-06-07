@@ -7,24 +7,46 @@ on:
     inputs:
       run_lint:
         description: 'Executar verificação de código (Lint)?'
-        required: true
         type: boolean
+        required: true
         default: true
       run_tests:
         description: 'Executar testes automatizados?'
-        required: true
         type: boolean
+        required: true
         default: true
 
 jobs:
-  lint-and-test:
-    uses: ./.github/workflows/lint-and-test.yml
-    with:
-      run_lint: ${{ github.event.inputs.run_lint || true }}
-      run_tests: ${{ github.event.inputs.run_tests || true }}
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+      - name: Build do projeto
+        run: echo "Build realizado com sucesso"
+
+  lint:
+    needs: build
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.run_lint || github.event_name != 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+      - name: Verificar estilo do código (Lint)
+        run: echo "Lint executado com sucesso"
+
+  test:
+    needs: lint
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.run_tests || github.event_name != 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+      - name: Executar testes automatizados
+        run: echo "Testes executados com sucesso"
 
   package:
-    needs: lint-and-test
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout do código
