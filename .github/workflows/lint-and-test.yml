@@ -7,10 +7,13 @@ on:
         description: 'Executar verificação de código (Lint)?'
         required: true
         type: boolean
+        default: true
+
       run_tests:
         description: 'Executar testes automatizados?'
         required: true
         type: boolean
+        default: true
 
 jobs:
   lint:

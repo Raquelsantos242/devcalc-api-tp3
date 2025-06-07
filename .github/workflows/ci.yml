@@ -5,15 +5,15 @@ on:
     branches: [main]
   workflow_dispatch:
     inputs:
-      run_tests:
-        description: 'Executar testes automatizados?'
-        type: boolean
-        required: true
-        default: true
       run_lint:
         description: 'Executar verificação de código (Lint)?'
-        type: boolean
         required: true
+        type: boolean
+        default: true
+      run_tests:
+        description: 'Executar testes automatizados?'
+        required: true
+        type: boolean
         default: true
 
 jobs:
@@ -22,7 +22,6 @@ jobs:
     with:
       run_lint: ${{ inputs.run_lint }}
       run_tests: ${{ inputs.run_tests }}
-
 
   package:
     needs: lint-and-test
