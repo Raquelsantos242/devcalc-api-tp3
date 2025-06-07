@@ -24,8 +24,8 @@ jobs:
         uses: actions/checkout@v3
       - name: Build do projeto
         run: echo "Build realizado com sucesso"
-      - name: Falha intencional
-        run: exit 1
+      #- name: Falha intencional
+      #  run: exit 1
 
   lint:
     needs: build
