@@ -20,8 +20,9 @@ jobs:
   lint-and-test:
     uses: ./.github/workflows/lint-and-test.yml
     with:
-      run_lint: ${{ github.event.inputs.run_lint }}
-      run_tests: ${{ github.event.inputs.run_tests }}
+      run_lint: ${{ inputs.run_lint }}
+      run_tests: ${{ inputs.run_tests }}
+
 
   package:
     needs: lint-and-test
