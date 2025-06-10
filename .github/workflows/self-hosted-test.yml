@@ -1,20 +1,15 @@
-name: Teste com Runner Auto-Hospedado
+# .github/workflows/self-hosted-test.yml
+name: Teste Runner Local
 
-on:
-  workflow_dispatch:
+on: [workflow_dispatch]
 
 jobs:
-  self-hosted-test:
+  teste-runner:
     runs-on: self-hosted
     steps:
-      - name: Verificar SO
-        run: uname -a
-
-      - name: Verificar Java
+      - name: Verificar sistema operacional
+        run: uname -a || ver
+      - name: Verificar versão do Java
         run: java -version
-
-      - name: Instalar htop (como exemplo)
-        run: sudo apt update && sudo apt install -y htop
-
-      - name: Verificar htop
-        run: htop --version || echo "htop instalado"
+      - name: Instalar software adicional
+        run: choco install curl -y
