@@ -1,15 +1,18 @@
 # .github/workflows/self-hosted-test.yml
 name: Teste Runner Local
 
-on: [workflow_dispatch]
+on:
+  workflow_dispatch:
 
 jobs:
   teste-runner:
-    runs-on: self-hosted
+    runs-on: [self-hosted, Windows, X64]
     steps:
       - name: Verificar sistema operacional
-        run: uname -a || ver
-      - name: Verificar versão do Java
+        run: |
+          echo "Rodando em:"
+          uname -a  || ver
+      - name: Verificar Java
         run: java -version
-      - name: Instalar software adicional
+      - name: Instalar software (curl)
         run: choco install curl -y
