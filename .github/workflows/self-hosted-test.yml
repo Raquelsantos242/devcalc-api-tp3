@@ -1,0 +1,19 @@
+name: Runner Auto-Hospedado
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-runner:
+    runs-on: self-hosted
+    steps:
+      - name: Verificar ambiente do runner
+        run: uname -a
+
+      - name: Versão do Java
+        run: java -version
+
+      - name: Rodando localmente no runner auto-hospedado
+        run: echo "Rodando localmente no runner auto-hospedado"
+
+
