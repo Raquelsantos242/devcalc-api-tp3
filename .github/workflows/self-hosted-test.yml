@@ -1,19 +1,20 @@
-name: Runner Auto-Hospedado
+name: Teste com Runner Auto-Hospedado
 
 on:
   workflow_dispatch:
 
 jobs:
-  test-runner:
+  self-hosted-test:
     runs-on: self-hosted
     steps:
-      - name: Verificar ambiente do runner
+      - name: Verificar SO
         run: uname -a
 
-      - name: Versão do Java
+      - name: Verificar Java
         run: java -version
 
-      - name: Rodando localmente no runner auto-hospedado
-        run: echo "Rodando localmente no runner auto-hospedado"
+      - name: Instalar htop (como exemplo)
+        run: sudo apt update && sudo apt install -y htop
 
-
+      - name: Verificar htop
+        run: htop --version || echo "htop instalado"
