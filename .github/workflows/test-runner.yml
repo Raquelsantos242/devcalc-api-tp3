@@ -1,4 +1,4 @@
-name: Teste do Runner Self-Hosted
+name: Teste Runner Self-Hosted
 
 on:
   workflow_dispatch:
@@ -8,21 +8,19 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Informações do sistema
-        run: systeminfo
+        run: ver
         shell: cmd
 
-      - name: Configurar e testar Java
+      - name: Testar Java
         run: |
           set JAVA_HOME=C:\Users\55219\jdk-17.0.9_windows-x64_bin\jdk-17.0.9
           set PATH=%JAVA_HOME%\bin;%PATH%
           java -version
-          javac -version
         shell: cmd
 
-      - name: Instalar e testar software adicional
-        run:
-          curl -o nano.zip https://www.nano-editor.org/dist/win32-support/nano-7.2.zip
-          tar -xf nano.zip -C C:\
-          
+      - name: Instalar e testar Nano
+        run: |
+          powershell -Command "Invoke-WebRequest -Uri 'https://www.nano-editor.org/dist/win32-support/nano-7.2.zip' -OutFile 'nano.zip'"
+          powershell -Command "Expand-Archive -Path nano.zip -DestinationPath C:\nano -Force"
           C:\nano\nano.exe --version
         shell: cmd
