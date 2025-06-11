@@ -1,4 +1,4 @@
-name: Teste do Runner Self-Hosted
+name: Runner Auto-Hospedado Simples
 
 on:
   workflow_dispatch:
@@ -7,26 +7,21 @@ jobs:
   teste:
     runs-on: self-hosted
     steps:
-      # 1. Comando básico de sistema (equivalente ao uname -a)
       - name: Informações do sistema
-        run: systeminfo
+        run: ver
         shell: cmd
 
-      # 2. Instalação de software adicional (exemplo: Git)
-      - name: Instalar Git via Chocolatey
-        run: choco install git -y
+      - name: Versão do Java
+        run: java -version
         shell: cmd
 
-      # 3. Verificar instalação do software adicional
-      - name: Verificar versão do Git
-        run: git --version
-        shell: cmd
-
-      # 4. Configurar e testar Java
-      - name: Testar ambiente Java
+      - name: Instalar e testar software adicional
         run: |
-          set JAVA_HOME=C:\Users\55219\jdk-17.0.9_windows-x64_bin\jdk-17.0.9
-          set PATH=%JAVA_HOME%\bin;%PATH%
-          java -version
-          javac -version
+          # Baixar e instalar o curl
+          bitsadmin /transfer downloadCurl /download /priority normal https://curl.se/windows/dl-8.8.0_4/curl-8.8.0_4-win64-mingw.zip curl.zip
+          tar -xf curl.zip -C C:\
+          set PATH=C:\curl-8.8.0_4-win64-mingw\bin;%PATH%
+          
+          # Testar a instalação
+          curl --version
         shell: cmd
