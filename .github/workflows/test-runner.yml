@@ -19,20 +19,17 @@ jobs:
           java -version
         shell: cmd
 
-      - name: Instalar Scoop (sem admin)
+      - name: Instalar Nano via Scoop (sem admin)
         shell: powershell
         run: |
           Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
           [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
           iwr -UseBasicParsing get.scoop.sh | iex
 
-      - name: Adicionar Scoop ao PATH
-        shell: powershell
-        run: |
-          $env:PATH += ";$env:USERPROFILE\scoop\shims"
+          $scoopShims = Join-Path $HOME 'scoop\shims'
+          $env:PATH = "$scoopShims;$env:PATH"
 
-      - name: Instalar Nano via Scoop
-        shell: powershell
-        run: |
           scoop install nano
           nano --version
+      
