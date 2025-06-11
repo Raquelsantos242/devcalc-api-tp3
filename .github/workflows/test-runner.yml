@@ -7,7 +7,23 @@ jobs:
   teste:
     runs-on: self-hosted
     steps:
-      - name: Configurar e testar Java
+      # 1. Comando básico de sistema (equivalente ao uname -a)
+      - name: Informações do sistema
+        run: systeminfo
+        shell: cmd
+
+      # 2. Instalação de software adicional (exemplo: Git)
+      - name: Instalar Git via Chocolatey
+        run: choco install git -y
+        shell: cmd
+
+      # 3. Verificar instalação do software adicional
+      - name: Verificar versão do Git
+        run: git --version
+        shell: cmd
+
+      # 4. Configurar e testar Java
+      - name: Testar ambiente Java
         run: |
           set JAVA_HOME=C:\Users\55219\jdk-17.0.9_windows-x64_bin\jdk-17.0.9
           set PATH=%JAVA_HOME%\bin;%PATH%
