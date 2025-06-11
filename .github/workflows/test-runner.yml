@@ -20,11 +20,9 @@ jobs:
         shell: cmd
 
       - name: Instalar e testar software adicional
-        run: |
-          # Baixar e instalar o nano
+        run:
           curl -o nano.zip https://www.nano-editor.org/dist/win32-support/nano-7.2.zip
           tar -xf nano.zip -C C:\
           
-          # Testar a instalação
           C:\nano\nano.exe --version
         shell: cmd
