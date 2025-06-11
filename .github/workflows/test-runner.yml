@@ -1,0 +1,12 @@
+name: Teste do Runner Self-Hosted
+
+on:
+  workflow_dispatch:
+
+jobs:
+  teste:
+    runs-on: self-hosted
+    steps:
+      - name: Mostrar versão do Java
+        run: java -version
+        shell: cmd
