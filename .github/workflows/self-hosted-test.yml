@@ -1,4 +1,3 @@
-# .github/workflows/self-hosted-test.yml
 name: Teste Runner Local
 
 on:
@@ -11,27 +10,10 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v3
 
-      - name: Instalar Chocolatey
-        shell: pwsh
-        run: |
-          Set-ExecutionPolicy Bypass -Scope Process -Force
-          iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-
-      - name: Instalar JDK 17
-        shell: pwsh
-        run: choco install temurin17 -y
-
-      - name: Verificar sistema operacional
-        shell: pwsh
+      - name: Exibir sistema operacional
         run: ver
+        shell: cmd
 
-      - name: Verificar versão do Java
-        shell: pwsh
+      - name: Exibir versão do Java
         run: java -version
-
-      - name: Instalar curl via Chocolatey
-        shell: pwsh
-        run: choco install curl -y
-
-      - name: Verificar comando curl
-        run: curl --version
+        shell: cmd
