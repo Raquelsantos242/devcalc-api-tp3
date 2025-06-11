@@ -7,6 +7,7 @@ jobs:
   teste:
     runs-on: self-hosted
     steps:
+
       - name: Informações do sistema
         run: ver
         shell: cmd
@@ -18,17 +19,20 @@ jobs:
           java -version
         shell: cmd
 
-      - name: Instalar Chocolatey
+      - name: Instalar Scoop (sem admin)
         shell: powershell
         run: |
-          Set-ExecutionPolicy Bypass -Scope Process -Force
+          Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
           [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-         
-          iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+          iwr -UseBasicParsing get.scoop.sh | iex
 
-      - name: Instalar Nano via Chocolatey
+      - name: Adicionar Scoop ao PATH
         shell: powershell
         run: |
-          choco feature enable -n allowGlobalConfirmation
-          choco install nano-win
+          $env:PATH += ";$env:USERPROFILE\scoop\shims"
+
+      - name: Instalar Nano via Scoop
+        shell: powershell
+        run: |
+          scoop install nano
           nano --version
