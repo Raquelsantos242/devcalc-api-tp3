@@ -7,6 +7,9 @@ jobs:
   teste:
     runs-on: self-hosted
     steps:
-      - name: Mostrar versão do Java
-        run: java -version
+      - name: Testar instalações
+        run: |
+          "C:\\Users\\55219\\jdk-17.0.9_windows-x64_bin\\jdk-17.0.9\\bin\\java" -version
+          "C:\\Users\\55219\\apache-maven-3.9.9\\bin\\mvn.cmd" --version
+          echo Instalações verificadas com sucesso!
         shell: cmd
