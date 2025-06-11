@@ -7,18 +7,10 @@ jobs:
   teste:
     runs-on: self-hosted
     steps:
-      - name: Verificar instalação do Java
-        run: |
-          dir "C:\Users\55219\jdk-17.0.9_windows-x64_bin\jdk-17.0.9\bin\java.exe"
-        shell: cmd
-
-      - name: Mostrar versão do Java (caminho completo)
-        run: "C:\Users\55219\jdk-17.0.9_windows-x64_bin\jdk-17.0.9\bin\java -version"
-        shell: cmd
-
-      - name: Configurar ambiente Java
+      - name: Configurar e testar Java
         run: |
           set JAVA_HOME=C:\Users\55219\jdk-17.0.9_windows-x64_bin\jdk-17.0.9
           set PATH=%JAVA_HOME%\bin;%PATH%
           java -version
+          javac -version
         shell: cmd
