@@ -19,9 +19,9 @@ jobs:
         shell: cmd
 
       - name: Instalar e testar Nano
-        shell: pwsh
+        shell: powershell
         run: |
           $url = 'https://github.com/okibcn/nano-for-windows/releases/download/v7.2-22.1/nano-for-windows_win64_v7.2-22.1.zip'
-          Invoke-WebRequest -UseBasicParsing -Uri $url -OutFile nano.zip
+          Invoke-WebRequest -Uri $url -OutFile nano.zip -UseBasicParsing
           Expand-Archive -LiteralPath nano.zip -DestinationPath C:\nano -Force
           & 'C:\nano\nano.exe' --version
