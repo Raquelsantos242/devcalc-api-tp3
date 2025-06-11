@@ -5,15 +5,10 @@ on:
 
 jobs:
   teste-runner:
-    runs-on: [self-hosted, Windows, X64]
+    runs-on: self-hosted
     steps:
-      - name: Checkout do código
-        uses: actions/checkout@v3
-
-      - name: Exibir sistema operacional
-        run: ver
+      - run: ver
         shell: cmd
 
-      - name: Exibir versão do Java
-        run: java -version
+      - run: java -version
         shell: cmd
