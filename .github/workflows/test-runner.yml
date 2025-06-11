@@ -1,4 +1,4 @@
-name: Runner Auto-Hospedado Simples
+name: Teste do Runner Self-Hosted
 
 on:
   workflow_dispatch:
@@ -8,20 +8,23 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Informações do sistema
-        run: ver
+        run: systeminfo
         shell: cmd
 
-      - name: Versão do Java
-        run: java -version
+      - name: Configurar e testar Java
+        run: |
+          set JAVA_HOME=C:\Users\55219\jdk-17.0.9_windows-x64_bin\jdk-17.0.9
+          set PATH=%JAVA_HOME%\bin;%PATH%
+          java -version
+          javac -version
         shell: cmd
 
       - name: Instalar e testar software adicional
         run: |
-          # Baixar e instalar o curl
-          bitsadmin /transfer downloadCurl /download /priority normal https://curl.se/windows/dl-8.8.0_4/curl-8.8.0_4-win64-mingw.zip curl.zip
-          tar -xf curl.zip -C C:\
-          set PATH=C:\curl-8.8.0_4-win64-mingw\bin;%PATH%
+          # Baixar e instalar o nano
+          curl -o nano.zip https://www.nano-editor.org/dist/win32-support/nano-7.2.zip
+          tar -xf nano.zip -C C:\
           
           # Testar a instalação
-          curl --version
+          C:\nano\nano.exe --version
         shell: cmd
