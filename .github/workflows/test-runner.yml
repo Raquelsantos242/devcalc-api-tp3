@@ -18,11 +18,17 @@ jobs:
           java -version
         shell: cmd
 
-      - name: Instalar Nano via Chocolatey
-        shell: cmd
+      - name: Instalar Chocolatey
+        shell: powershell
         run: |
-          choco install nano-win -y
+          Set-ExecutionPolicy Bypass -Scope Process -Force
+          [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+         
+          iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
+      - name: Instalar Nano via Chocolatey
+        shell: powershell
+        run: |
+          choco feature enable -n allowGlobalConfirmation
+          choco install nano-win
           nano --version
-      
-      
-      
