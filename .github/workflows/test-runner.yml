@@ -18,18 +18,11 @@ jobs:
           java -version
         shell: cmd
 
-      - name: Instalar e testar Nano (via 7‑Zip)
-        shell: powershell
+      - name: Instalar Nano via Chocolatey
+        shell: cmd
         run: |
-          Invoke-WebRequest -UseBasicParsing `
-            -Uri 'https://www.7-zip.org/a/7z2201-x64.zip' `
-            -OutFile 7zip.zip
-          Expand-Archive -LiteralPath 7zip.zip -DestinationPath C:\7zip -Force
-
-          $url = 'https://github.com/okibcn/nano-for-windows/releases/download/v7.2-22.1/nano-for-windows_win64_v7.2-22.1.zip'
-          Invoke-WebRequest -UseBasicParsing -Uri $url -OutFile nano.zip
-
-          & 'C:\7zip\7z.exe' x nano.zip -oC:\nano -y
-          & 'C:\nano\nano.exe' --version
+          choco install nano-win -y
+          nano --version
+      
       
       
