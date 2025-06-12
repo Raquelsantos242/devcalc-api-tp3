@@ -1,4 +1,4 @@
-name: Issue on Failure (Simple)
+name: Monitoramento de falhas
 
 permissions:
   issues: write
@@ -8,20 +8,21 @@ on:
 
 jobs:
   create-issue-if-failure:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - name: Simular falha de deploy
-        run: exit 1 || true
+        run: exit 1
 
       - name: Criar issue se falha ocorreu
         if: ${{ failure() }}
         run: |
-          curl -X POST https://api.github.com/repos/${{ github.repository }}/issues \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            -d '{
-              "title": "falha no deploy",
+          curl -X POST https://api.github.com/repos/${{ github.repository }}/issues `
+            -H "Authorization: Bearer ${{ github.token }}" `
+            -H "Accept: application/vnd.github.v3+json" `
+            -d '{ 
+              "title": "Falha no deploy",
               "body": "O deploy automático falhou. Verifique os logs do workflow.",
               "labels": ["bug", "auto-created"]
             }'
+        shell: pwsh
