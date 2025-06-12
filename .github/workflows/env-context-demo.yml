@@ -1,28 +1,34 @@
-name: Monitoramento de falhas
-
-permissions:
-  issues: write
+name: Env Context Demo
 
 on:
   workflow_dispatch:
 
+env:
+  STAGE: test
+
 jobs:
-  create-issue-if-failure:
-    runs-on: windows-latest
+  show-env-scopes:
+    name: Exibir Contextos e Variáveis de Ambiente
+    runs-on: ubuntu-latest
+
+    env:
+      STAGE: job-level
 
     steps:
-      - name: Simular falha de deploy
-        run: exit 1
-
-      - name: Criar issue se falha ocorreu
-        if: ${{ failure() }}
+      - name: Exibir variáveis e contextos (step 1)
+        env:
+          STAGE: step-level
         run: |
-          curl -X POST https://api.github.com/repos/${{ github.repository }}/issues `
-            -H "Authorization: Bearer ${{ github.token }}" `
-            -H "Accept: application/vnd.github.v3+json" `
-            -d '{ 
-              "title": "Falha no deploy",
-              "body": "O deploy automático falhou. Verifique os logs do workflow.",
-              "labels": ["bug", "auto-created"]
-            }'
-        shell: pwsh
+          echo "=== Step 1 ==="
+          echo "Usuário que acionou: ${{ github.actor }}"
+          echo "SO do runner: ${{ runner.os }}"
+          echo "STAGE (workflow-level) = test"
+          echo "STAGE (job-level) = $STAGE"
+          echo "STAGE (step-level) = $STAGE"
+
+      - name: Exibir variáveis e contextos (step 2)
+        env:
+          STAGE: production
+        run: |
+          echo "=== Step 2 ==="
+          echo "STAGE reescrito (step) = $STAGE"
