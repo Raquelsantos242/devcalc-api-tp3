@@ -1,31 +1,27 @@
-name: Env Context Demo
+name: Issue on Failure (Simple)
+
+permissions:
+  issues: write
 
 on:
   workflow_dispatch:
 
-env:
-  STAGE: workflow
-
 jobs:
-  show-env-info:
+  create-issue-if-failure:
     runs-on: ubuntu-latest
 
-    env:
-      STAGE: job
-
     steps:
-      - name: Mostrar contexto GitHub e runner
-        run: |
-          echo "Usuário que acionou: ${{ github.actor }}"
-          echo "Sistema operacional do runner: ${{ runner.os }}"
-          echo "STAGE (nível job): $STAGE"
+      - name: Simular falha de deploy
+        run: exit 1 || true
 
-      - name: Sobrescrevendo STAGE no step
-        env:
-          STAGE: step
+      - name: Criar issue se falha ocorreu
+        if: ${{ failure() }}
         run: |
-          echo "STAGE (nível step): $STAGE"
-
-      - name: Mostrar contexto no nível do step sem sobrescrever
-        run: |
-          echo "STAGE permanece como no job: $STAGE"
+          curl -X POST https://api.github.com/repos/${{ github.repository }}/issues \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -d '{
+              "title": "falha no deploy",
+              "body": "O deploy automático falhou. Verifique os logs do workflow.",
+              "labels": ["bug", "auto-created"]
+            }'
