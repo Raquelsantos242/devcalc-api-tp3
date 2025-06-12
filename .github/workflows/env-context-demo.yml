@@ -1,0 +1,31 @@
+name: Env Context Demo
+
+on:
+  workflow_dispatch:
+
+env:
+  STAGE: workflow
+
+jobs:
+  show-env-info:
+    runs-on: ubuntu-latest
+
+    env:
+      STAGE: job
+
+    steps:
+      - name: Mostrar contexto GitHub e runner
+        run: |
+          echo "Usuário que acionou: ${{ github.actor }}"
+          echo "Sistema operacional do runner: ${{ runner.os }}"
+          echo "STAGE (nível job): $STAGE"
+
+      - name: Sobrescrevendo STAGE no step
+        env:
+          STAGE: step
+        run: |
+          echo "STAGE (nível step): $STAGE"
+
+      - name: Mostrar contexto no nível do step sem sobrescrever
+        run: |
+          echo "STAGE permanece como no job: $STAGE"
